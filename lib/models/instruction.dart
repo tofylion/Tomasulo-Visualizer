@@ -54,7 +54,9 @@ bool issueInstruction(Instruction i) {
     if (issueInstruction(instructionQueue.first)){
       instructionQueue.removeFirst();
     }
+    if(instructionQueue.isNotEmpty)
     currentInstruction = instructionQueue.first;
+    else currentInstruction = null; 
   }
 
   }
