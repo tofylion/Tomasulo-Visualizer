@@ -10,6 +10,7 @@ import 'package:tomasulo_viz/components/atoms/app_colours.dart';
 import 'package:tomasulo_viz/constants/app_styles.dart';
 import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
 import 'package:tomasulo_viz/components/atoms/dimensions.dart';
+import 'package:tomasulo_viz/screens/instructions_screen/instructions_screen.dart';
 import 'package:tomasulo_viz/screens/settings_screen/main/settings_screen.dart';
 
 class LandingScreen extends ConsumerWidget {
@@ -46,19 +47,20 @@ class LandingScreen extends ConsumerWidget {
                   ),
                   CTAButton(
                     text: 'Start',
-                    onPressed: () => DoNothingAction(),
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const InstructionsScreen();
+                    })),
                   ),
                   SizedBox(
                     height: 26.sp,
                   ),
                   SecondaryButton(
                     text: 'Options',
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const SettingsScreen();
-                      }));
-                    },
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const SettingsScreen();
+                    })),
                   ),
                 ],
               ),

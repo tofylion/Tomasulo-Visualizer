@@ -39,7 +39,10 @@ class SettingsTabButton extends StatelessWidget {
                   BoxShadow(
                       offset: Offset(0, 4.sp), color: AppColours.egyptianBlue),
                 ]
-              : [],
+              : [
+                  BoxShadow(
+                      offset: Offset(0, 2.sp), color: AppColours.egyptianBlue)
+                ],
           borderRadius: Dimensions.defaultButtonRadius,
         ),
         child: ElevatedButton(
