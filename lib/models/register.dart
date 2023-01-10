@@ -1,4 +1,3 @@
-import 'instruction.dart' as instruction;
 import 'dart:collection';
 import 'package:tuple/tuple.dart';
 
@@ -8,8 +7,7 @@ class Register {
   String? opID;
   Function(Function(double))? addListener;
 
-
-@override
+  @override
   String toString() {
     return ('$value,$opID');
   }
@@ -69,9 +67,10 @@ class RegisterFile {
       String regName, String id, Function(Function(double)) addListener) {
     registers[regName].waitOn(id, addListener);
   }
-@override
+
+  @override
   String toString() {
-    String s =  "Register file \n";
+    String s = "Register file \n";
     s += registers.toString();
     return s;
   }
