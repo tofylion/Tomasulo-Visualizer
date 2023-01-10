@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum CycleConfig { add, mult, div, load, store }
+enum CycleConfig { add, mult, sub, div, load, store }
 
 const Map<CycleConfig, String> cycleConfigNames = {
   CycleConfig.add: 'ADD Clock Cycles',
+  CycleConfig.sub: 'SUB Clock Cycles',
   CycleConfig.mult: 'MULT Clock Cycles',
   CycleConfig.div: 'DIV Clock Cycles',
   CycleConfig.load: 'LW Clock Cycles',
@@ -16,7 +17,6 @@ enum RSSizesConfig { add, mult, div, load, store }
 const Map<RSSizesConfig, String> rsSizesConfigNames = {
   RSSizesConfig.add: 'ADD Station Size',
   RSSizesConfig.mult: 'MULT Station Size',
-  RSSizesConfig.div: 'DIV Station Size',
   RSSizesConfig.load: 'LOAD Station Size',
   RSSizesConfig.store: 'STORE Station Size',
 };
@@ -26,7 +26,6 @@ enum FUSizesConfig { adders, multipliers, dividers, memory }
 const Map<FUSizesConfig, String> fuSizesConfigNames = {
   FUSizesConfig.adders: 'Number of ADDERS',
   FUSizesConfig.multipliers: 'Number of MULTIPLIERS',
-  FUSizesConfig.dividers: 'Number of DIVIDERS',
   FUSizesConfig.memory: 'Number of MEMORY units'
 };
 
