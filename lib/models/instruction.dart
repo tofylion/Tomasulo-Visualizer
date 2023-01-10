@@ -40,6 +40,7 @@ late Instruction currentInstruction;
     for (Instruction i in l){
       instructionQueue.add(i);
     }
+    if(instructionQueue.isNotEmpty)
     currentInstruction = instructionQueue.first;
   }
 bool issueInstruction(Instruction i) {
