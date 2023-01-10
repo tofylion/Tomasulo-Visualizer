@@ -12,7 +12,7 @@ const Map<CycleConfig, String> cycleConfigNames = {
   CycleConfig.store: 'SW Clock Cycles',
 };
 
-enum RSSizesConfig { add, mult, div, load, store }
+enum RSSizesConfig { add, mult, load, store }
 
 const Map<RSSizesConfig, String> rsSizesConfigNames = {
   RSSizesConfig.add: 'ADD Station Size',
@@ -21,7 +21,7 @@ const Map<RSSizesConfig, String> rsSizesConfigNames = {
   RSSizesConfig.store: 'STORE Station Size',
 };
 
-enum FUSizesConfig { adders, multipliers, dividers, memory }
+enum FUSizesConfig { adders, multipliers, memory }
 
 const Map<FUSizesConfig, String> fuSizesConfigNames = {
   FUSizesConfig.adders: 'Number of ADDERS',

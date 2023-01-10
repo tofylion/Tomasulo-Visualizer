@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tomasulo_viz/components/widgets/buttons/cta_button.dart';
-import 'package:tomasulo_viz/components/widgets/buttons/secondary_button.dart';
 import 'package:tomasulo_viz/components/widgets/buttons/settings_tab_button.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
 import 'package:tomasulo_viz/constants/app_timing.dart';

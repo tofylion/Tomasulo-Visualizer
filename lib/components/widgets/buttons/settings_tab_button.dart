@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sprung/sprung.dart';
 import 'package:tomasulo_viz/components/molecules/tappable.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
 import 'package:tomasulo_viz/constants/app_styles.dart';
 import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
 import 'package:tomasulo_viz/components/atoms/dimensions.dart';
+import 'package:tomasulo_viz/constants/app_timing.dart';
 
 class SettingsTabButton extends StatelessWidget {
   const SettingsTabButton({
@@ -21,8 +23,10 @@ class SettingsTabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tappable(
+      fadeInDuration: AppTiming.transitionsDuration,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        curve: Sprung.criticallyDamped,
+        duration: AppTiming.transitionsDuration,
         width: selected
             ? Dimensions.enlargedButtonSize.width
             : Dimensions.defaultButtonSize.width,

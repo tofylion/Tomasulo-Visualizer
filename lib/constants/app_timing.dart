@@ -1,3 +1,3 @@
 class AppTiming {
-  static const transitionsDuration = Duration(milliseconds: 300);
+  static const transitionsDuration = Duration(milliseconds: 500);
 }
