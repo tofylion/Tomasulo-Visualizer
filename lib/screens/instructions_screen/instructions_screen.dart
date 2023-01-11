@@ -11,7 +11,7 @@ import 'package:tomasulo_viz/constants/app_assets.dart';
 import 'package:tomasulo_viz/constants/app_timing.dart';
 import 'package:tomasulo_viz/models/instruction.dart';
 import 'package:tomasulo_viz/screens/instructions_screen/instructions_screen_view_model.dart';
-import 'package:tomasulo_viz/screens/instructions_screen/widgets/instruction_row.dart';
+import 'package:tomasulo_viz/screens/instructions_screen/widgets/instruction_screen_row.dart';
 
 class InstructionsScreen extends ConsumerStatefulWidget {
   const InstructionsScreen({super.key});
@@ -86,7 +86,7 @@ class _InstructionsScreenState extends ConsumerState<InstructionsScreen> {
                               return Column(
                                 key: ValueKey(instruction),
                                 children: [
-                                  InstructionRow(
+                                  InstructionScreenRow(
                                     instruction: instruction,
                                     index: index,
                                     remove: vm.removeInstruction,
@@ -113,7 +113,7 @@ class _InstructionsScreenState extends ConsumerState<InstructionsScreen> {
               right: 48.sp,
               child: CTAButton(
                 text: 'Next',
-                onPressed: () => DoNothingAction(),
+                onPressed: () => vm.goNext(context),
               )),
           Positioned(
               bottom: 59.sp,

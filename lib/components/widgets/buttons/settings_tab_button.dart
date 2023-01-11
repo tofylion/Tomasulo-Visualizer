@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sprung/sprung.dart';
+import 'package:tomasulo_viz/components/atoms/app_shadows.dart';
 import 'package:tomasulo_viz/components/molecules/tappable.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
 import 'package:tomasulo_viz/constants/app_styles.dart';
@@ -35,14 +36,8 @@ class SettingsTabButton extends StatelessWidget {
             : Dimensions.defaultButtonSize.height,
         decoration: BoxDecoration(
           boxShadow: selected
-              ? [
-                  BoxShadow(
-                      offset: Offset(0, 4.sp), color: AppColours.egyptianBlue),
-                ]
-              : [
-                  BoxShadow(
-                      offset: Offset(0, 2.sp), color: AppColours.egyptianBlue)
-                ],
+              ? [AppShadows.shadowDefault3]
+              : [AppShadows.shadowDefault2],
           borderRadius: Dimensions.defaultButtonRadius,
         ),
         child: ElevatedButton(

@@ -11,8 +11,8 @@ import 'package:tomasulo_viz/constants/app_timing.dart';
 import 'package:tomasulo_viz/models/instruction.dart';
 import 'package:tomasulo_viz/models/providers/registers_providers.dart';
 
-class InstructionRow extends ConsumerStatefulWidget {
-  const InstructionRow(
+class InstructionScreenRow extends ConsumerStatefulWidget {
+  const InstructionScreenRow(
       {Key? key, required this.instruction, required this.index, this.remove})
       : super(key: key);
 
@@ -24,7 +24,7 @@ class InstructionRow extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _InstrictionRowState();
 }
 
-class _InstrictionRowState extends ConsumerState<InstructionRow>
+class _InstrictionRowState extends ConsumerState<InstructionScreenRow>
     with SingleTickerProviderStateMixin {
   late final List<String> allRegisters;
   late final AnimationController _controller;

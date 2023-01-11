@@ -27,4 +27,7 @@ class AppColours {
 
   ///#40000000
   static const Color black25 = Color(0x40000000);
+
+  ///#000000
+  static const Color black = Color(0x00000000);
 }

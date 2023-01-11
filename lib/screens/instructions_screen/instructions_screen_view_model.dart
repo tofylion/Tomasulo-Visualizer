@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tomasulo_viz/models/instruction.dart';
 import 'package:tomasulo_viz/models/providers/registers_providers.dart';
+import 'package:tomasulo_viz/screens/visualizer/main/visualizer_screen.dart';
 
 class InstructionsScreenViewModel extends ChangeNotifier {
   InstructionsScreenViewModel({required this.registers});
@@ -76,5 +78,15 @@ class InstructionsScreenViewModel extends ChangeNotifier {
 
     _instructions.add(instruction);
     notifyListeners();
+  }
+
+  void goNext(BuildContext context) {
+    //Check for everything
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const VisualizerScreen(),
+        ));
   }
 }
