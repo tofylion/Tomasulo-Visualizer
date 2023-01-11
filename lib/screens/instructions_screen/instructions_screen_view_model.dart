@@ -1,18 +1,23 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tomasulo_viz/constants/app_config.dart';
 import 'package:tomasulo_viz/models/instruction.dart';
+import 'package:tomasulo_viz/models/operation_station.dart';
+import 'package:tomasulo_viz/models/providers/clock_functions.dart';
+import 'package:tomasulo_viz/models/providers/memory_provider.dart';
 import 'package:tomasulo_viz/models/providers/registers_providers.dart';
 import 'package:tomasulo_viz/screens/visualizer/main/visualizer_screen.dart';
 
 class InstructionsScreenViewModel extends ChangeNotifier {
-  InstructionsScreenViewModel({required this.registers});
+  InstructionsScreenViewModel(
+      {required this.registers, required this.config, required this.memory});
   final List<String> registers;
+  final AppConfig config;
+  final MemOperationStation memory;
 
-  final List<Instruction> _instructions = [];
-  List<Instruction> get instructions => _instructions;
+  List<Instruction> get instructions => config.instructions;
 
   static final provider =
       ChangeNotifierProvider<InstructionsScreenViewModel>((ref) {
@@ -20,7 +25,10 @@ class InstructionsScreenViewModel extends ChangeNotifier {
     final registerList =
         registerFile.registers.entries.map((entry) => entry.key).toList();
     registerList.sort();
-    return InstructionsScreenViewModel(registers: registerList);
+    final config = ref.read(AppConfig.provider);
+    final memory = ref.read(memoryProvider);
+    return InstructionsScreenViewModel(
+        registers: registerList, config: config, memory: memory);
   });
 
   void reorderInstructions(int oldIndex, int newIndex) {
@@ -34,7 +42,7 @@ class InstructionsScreenViewModel extends ChangeNotifier {
   }
 
   void removeInstruction(int index) {
-    _instructions.removeAt(index);
+    instructions.removeAt(index);
     notifyListeners();
   }
 
@@ -65,28 +73,32 @@ class InstructionsScreenViewModel extends ChangeNotifier {
         instruction = Instruction.load(
             target: target,
             operand2Reg: operand2Reg,
-            addressOffset: Random().nextInt(
-                100)); //TODO: change 100 with memory address - operand2RegValue
+            addressOffset: Random().nextInt(memory.memory.length ~/ 2));
         break;
       case InstructionType.store:
         instruction = Instruction.store(
             operand1Reg: target,
             operand2Reg: operand2Reg,
-            addressOffset: Random().nextInt(100)); //TODO: Same todo as above
+            addressOffset: Random().nextInt(memory.memory.length ~/ 2));
         break;
     }
 
-    _instructions.add(instruction);
+    instructions.add(instruction);
     notifyListeners();
   }
 
-  void goNext(BuildContext context) {
-    //Check for everything
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const VisualizerScreen(),
-        ));
+  void goNext(BuildContext context, WidgetRef ref) {
+    if (instructions.isNotEmpty) {
+      //Check for everything
+      initClockListeners(ref);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const VisualizerScreen(),
+          ));
+    } else {
+      const snackBar = SnackBar(content: Text("Instructions can't be empty!"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

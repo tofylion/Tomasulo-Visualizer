@@ -13,5 +13,5 @@ class AppShadows {
   static BoxShadow get shadowDefault2 =>
       BoxShadow(offset: Offset(0, 2.sp), color: AppColours.egyptianBlue);
   static Shadow get textShadowDefault =>
-      Shadow(color: AppColours.black, offset: Offset(1.sp, 1.sp));
+      Shadow(color: AppColours.black, offset: Offset(2.sp, 1.sp));
 }

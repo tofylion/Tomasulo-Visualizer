@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
+import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
 import 'package:tomasulo_viz/components/atoms/dimensions.dart';
+import 'package:tomasulo_viz/components/widgets/buttons/cta_button.dart';
+import 'package:tomasulo_viz/models/providers/clock_provider.dart';
+import 'package:tomasulo_viz/models/providers/reservation_stations_providers.dart';
+import 'package:tomasulo_viz/screens/visualizer/main/visualizer_screen_view_model.dart';
 import 'package:tomasulo_viz/screens/visualizer/visualizer_drawing_constants.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/instructions_queue/instructions_queue.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/register_file/register_file.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/memory_buffer_widget.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/reservation_station_widget.dart';
 
 class VisualizerScreen extends ConsumerStatefulWidget {
   const VisualizerScreen({super.key});
@@ -17,6 +26,7 @@ class VisualizerScreen extends ConsumerStatefulWidget {
 class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(VisualizerScreenViewModel.provider);
     return Scaffold(
       backgroundColor: AppColours.egyptianBlue,
       body: Stack(
@@ -24,13 +34,39 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
         children: [
           ...drawAllConnectors(),
 
+          ///Clock Count
+          Consumer(
+            builder: (context, ref, child) {
+              ref.watch(clockProvider);
+              return Positioned(
+                  top: 64.sp,
+                  right: 20.sp,
+                  child: Row(
+                    children: [
+                      Text(
+                        vm.clock.cycles.toString(),
+                        style: AppTextStyles.dp48Grey,
+                      ),
+                      SizedBox(
+                        width: 9.sp,
+                      ),
+                      FaIcon(
+                        FontAwesomeIcons.solidClock,
+                        size: 42.sp,
+                        color: AppColours.grey,
+                      ),
+                    ],
+                  ));
+            },
+          ),
+
           ///Instruction Queue
           MyPositionedSized(
             top: 39.sp,
             left: 41.sp,
             size: Size(368.sp, 224.sp),
             colour: Colors.transparent,
-            child: InstructionsQueue(),
+            child: const InstructionsQueue(),
           ),
 
           ///LoadBuffer
@@ -38,14 +74,15 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.memoryBufferSize,
             left: VizDConstants.loadLeft,
             bottom: -VizDConstants.memoryBufferBottom + 1.sh,
+            child: const MemoryBufferWidget(stationType: AluStation.load),
           ),
 
           ///Store Buffer
           MyPositionedSized(
-            size: VizDConstants.memoryBufferSize,
-            left: VizDConstants.storeLeft,
-            bottom: -VizDConstants.memoryBufferBottom + 1.sh,
-          ),
+              size: VizDConstants.memoryBufferSize,
+              left: VizDConstants.storeLeft,
+              bottom: -VizDConstants.memoryBufferBottom + 1.sh,
+              child: const MemoryBufferWidget(stationType: AluStation.store)),
 
           ///Memory
           MyPositionedSized(
@@ -73,6 +110,7 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.RSSize,
             right: -VizDConstants.RSAddRight + 1.sw,
             bottom: -VizDConstants.RSBottom + 1.sh,
+            child: const ReservationStationWidget(stationType: AluStation.add),
           ),
 
           ///RS Multipliers
@@ -80,6 +118,7 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.RSSize,
             right: -VizDConstants.RSMultRight + 1.sw,
             bottom: -VizDConstants.RSBottom + 1.sh,
+            child: const ReservationStationWidget(stationType: AluStation.mult),
           ),
 
           ///AU
@@ -94,7 +133,16 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.regFileSize,
             bottom: -VizDConstants.regFileBottom + 1.sh,
             right: -VizDConstants.regFileRight + 1.sw,
+            child: RegisterFileWidget(),
           ),
+
+          Positioned(
+              right: 20.sp,
+              top: 174.sp,
+              child: CTAButton(
+                text: 'Next',
+                onPressed: () => vm.clockTick(context),
+              )),
 
           // ///Page middle
           // DrawLine(

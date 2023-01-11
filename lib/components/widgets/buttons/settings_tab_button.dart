@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sprung/sprung.dart';
 import 'package:tomasulo_viz/components/atoms/app_shadows.dart';
 import 'package:tomasulo_viz/components/molecules/tappable.dart';
-import 'package:tomasulo_viz/components/atoms/app_colours.dart';
 import 'package:tomasulo_viz/constants/app_styles.dart';
 import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
 import 'package:tomasulo_viz/components/atoms/dimensions.dart';

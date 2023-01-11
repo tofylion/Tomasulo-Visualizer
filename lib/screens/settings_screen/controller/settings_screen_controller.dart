@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tomasulo_viz/constants/app_config.dart';
 import 'package:tomasulo_viz/screens/settings_screen/constants/settings_tabs.dart';
+import 'package:tomasulo_viz/screens/settings_screen/pages/memory_size_page.dart';
 import 'package:tomasulo_viz/screens/settings_screen/pages/multiple_option_settings_page.dart';
 
 class SettingsScreenController {
@@ -23,6 +24,7 @@ class SettingsScreenController {
       configNames: fuSizesConfigNames,
       configs: config.fuSizes,
     ),
+    SettingsTab.MSize: const MemorySizePage()
   };
 
   bool _reverseTabDirection = false;

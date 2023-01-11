@@ -106,14 +106,14 @@ class _InstrictionRowState extends ConsumerState<InstructionScreenRow>
             width: 100.sp,
             height: 50.sp,
             style: AppTextStyles.dp32EgyptianBlue,
-            onChanged: updateAddress,
+            onChanged: (value) => updateAddress(value),
           )
         ],
         SizedBox(width: 10.sp),
         PrimaryDropDown(
             value: widget.instruction.operand2Reg,
             items: allRegisters,
-            onChanged: updateOperand2),
+            onChanged: (value) => updateOperand2(value)),
         SizedBox(width: 18.sp),
         Tappable(
             child: TextButton(

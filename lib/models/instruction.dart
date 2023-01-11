@@ -1,3 +1,9 @@
+import 'dart:collection';
+
+import 'package:flutter/cupertino.dart';
+import 'package:tomasulo_viz/models/reservation_station.dart';
+
+// do not edit
 class Instruction {
   final InstructionType _type;
   InstructionType get type => _type;
@@ -9,6 +15,10 @@ class Instruction {
   double operand1Val = 0;
   double operand2Val = 0;
   int? addressOffset;
+  int? issueCycle;
+  int? startOperationCycle;
+  int? endOperationCycle;
+  int? writeBackOperationCycle;
 
   Instruction.add(
       {required this.target,
@@ -42,41 +52,44 @@ class Instruction {
       : _type = InstructionType.store;
   @override
   String toString() {
-    return ('type : $type , target :$target, v1 : $operand1Val, v2 : $operand2Val, o1: $operand1ID, o2: $operand1ID');
+    return ('type : $type , target :$target, v1 : $operand1Val, v2 : $operand2Val, o1: $operand1ID, o2: $operand2ID');
   }
 }
 
-// class InstructionQueue {
-// Queue <Instruction> instructionQueue = Queue <Instruction> ();
-//   ReservationStation add;
-//   ReservationStation mult;
-//   AddressUnit addressUnit;
+class InstructionQueue extends ChangeNotifier {
+  final List<Instruction> instructions = <Instruction>[];
+  int index = 0;
+  ReservationStation add;
+  ReservationStation mult;
+  AddressUnit addressUnit;
 
-// late Instruction currentInstruction;
-//   InstructionQueue(List<Instruction> l, this.add, this.mult,this.addressUnit){
-//     for (Instruction i in l){
-//       instructionQueue.add(i);
-//     }
-//     if(instructionQueue.isNotEmpty)
-//     currentInstruction = instructionQueue.first;
-//   }
-// bool issueInstruction(Instruction i) {
-//   return add.allocate(i) ||
-//       mult.allocate(i) ||
-//       addressUnit.allocate(i);
-// }
+  InstructionQueue(List<Instruction> l, this.add, this.mult, this.addressUnit) {
+    instructions.addAll(l);
+  }
+  bool issueInstruction(Instruction i) {
+    return add.allocate(i) || mult.allocate(i) || addressUnit.allocate(i);
+  }
 
-//   void onClockTick(){
-//       if(instructionQueue.isNotEmpty){
-//     if (issueInstruction(instructionQueue.first)){
-//       instructionQueue.removeFirst();
-//     }
-//     if(instructionQueue.isNotEmpty)
-//     currentInstruction = instructionQueue.first;
-//     else currentInstruction = null;
-//   }
+  void onClockTick(int clockCycle) {
+    if (!finished && !addressUnit.busy) {
+      if (issueInstruction(currentInstruction!)) {
+        currentInstruction!.issueCycle = clockCycle;
+        index++;
+      }
 
-//   }
-// }
+      notifyListeners();
+    }
+  }
+
+  Instruction? get currentInstruction {
+    if (!finished) {
+      return instructions[index];
+    } else {
+      return null;
+    }
+  }
+
+  bool get finished => index >= instructions.length;
+}
 
 enum InstructionType { add, sub, mult, div, load, store }

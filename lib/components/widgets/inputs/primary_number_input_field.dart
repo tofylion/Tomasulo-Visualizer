@@ -12,7 +12,8 @@ class PrimaryNumberInputField extends StatelessWidget {
       this.onChanged,
       this.width,
       this.height,
-      this.style});
+      this.style,
+      this.controller});
 
   final String? initialValue;
   final void Function(String value)? onChanged;
@@ -24,9 +25,12 @@ class PrimaryNumberInputField extends StatelessWidget {
   final double? height;
 
   final TextStyle? style;
+
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       cursorColor: AppColours.egyptianBlue,
       style: style ?? AppTextStyles.dp32Black,
       textAlign: TextAlign.center,

@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tomasulo_viz/models/instruction.dart';
 
-enum CycleConfig { add, mult, sub, div, load, store }
+enum CycleConfig { add, mult, load }
 
 const Map<CycleConfig, String> cycleConfigNames = {
-  CycleConfig.add: 'ADD Clock Cycles',
-  CycleConfig.sub: 'SUB Clock Cycles',
-  CycleConfig.mult: 'MULT Clock Cycles',
-  CycleConfig.div: 'DIV Clock Cycles',
-  CycleConfig.load: 'LW Clock Cycles',
-  CycleConfig.store: 'SW Clock Cycles',
+  CycleConfig.add: 'ADDER Clock Cycles',
+  CycleConfig.mult: 'MULTIPLIER Clock Cycles',
+  CycleConfig.load: 'MEMORY Clock Cycles',
 };
 
 enum RSSizesConfig { add, mult, load, store }
@@ -29,17 +27,19 @@ const Map<FUSizesConfig, String> fuSizesConfigNames = {
   FUSizesConfig.memory: 'Number of MEMORY units'
 };
 
+const String memorySizeConfigName = 'MEMORY Size';
+
 class AppConfig extends ChangeNotifier {
   Map<CycleConfig, int> cycles = {
-    for (CycleConfig v in CycleConfig.values) v: 1
+    for (CycleConfig v in CycleConfig.values) v: 10
   };
 
   Map<RSSizesConfig, int> rsSizes = {
-    for (RSSizesConfig v in RSSizesConfig.values) v: 1
+    for (RSSizesConfig v in RSSizesConfig.values) v: 10
   };
 
   Map<FUSizesConfig, int> fuSizes = {
-    for (FUSizesConfig v in FUSizesConfig.values) v: 1
+    for (FUSizesConfig v in FUSizesConfig.values) v: 10
   };
 
   void modifyConfig<T extends Enum>(
@@ -48,8 +48,14 @@ class AppConfig extends ChangeNotifier {
     notifyListeners();
   }
 
-  int memorySize = 10;
-  int auSize = 10;
+  void modifyMemorySize(int value) {
+    memorySize = value;
+    notifyListeners();
+  }
+
+  int memorySize = 100;
+
+  List<Instruction> instructions = [];
 
   static final provider =
       ChangeNotifierProvider<AppConfig>((ref) => AppConfig());

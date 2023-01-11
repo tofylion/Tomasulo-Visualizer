@@ -40,6 +40,16 @@ class SettingsViewModel extends ChangeNotifier {
     }
   }
 
+  void modifyMemorySize(String? value) {
+    int? newValue = int.tryParse(value ?? '');
+    if (value?.isEmpty ?? true) {
+      newValue = 0;
+    }
+    if (newValue != null) {
+      config.modifyMemorySize(newValue);
+    }
+  }
+
   void refreshScreen() {
     notifyListeners();
   }

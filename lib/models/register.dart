@@ -5,31 +5,33 @@ import 'package:tuple/tuple.dart';
 class Register extends ChangeNotifier {
   double value = 0;
   String? opID;
-  Function(Function(double))? addTomaListener;
+  Function(Function(double, String))? addDataListener;
 
   @override
   String toString() {
     return ('$value,$opID');
   }
 
-  Tuple2<double, String?> getRegister(Function(double) listner) {
+  Tuple2<double, String?> getRegister(Function(double, String) listner) {
     if (opID != null) {
-      addTomaListener!(listner);
+      addDataListener!(listner);
     }
     return Tuple2(value, opID);
   }
 
-  void waitOn(String id, Function(Function(double)) addListener) {
+  void waitOn(String id, Function(Function(double, String)) addListener) {
     opID = id;
     addListener(listen);
-    this.addTomaListener = addListener;
+    this.addDataListener = addListener;
   }
 
-  void listen(double data) {
-    value = data;
-    opID = null;
-    addTomaListener = null;
-    notifyListeners();
+  void listen(double data, String id) {
+    if (opID == id) {
+      value = data;
+      opID = null;
+      addDataListener = null;
+      notifyListeners();
+    }
   }
 }
 
@@ -45,12 +47,13 @@ class RegisterFile {
     }
   }
 
-  Tuple2<double, String?> getRegister(String regName, Function(double) f) {
+  Tuple2<double, String?> getRegister(
+      String regName, Function(double, String) f) {
     return registers[regName]!.getRegister(f);
   }
 
-  void waitOn(
-      String regName, String id, Function(Function(double)) addListener) {
+  void waitOn(String regName, String id,
+      Function(Function(double, String)) addListener) {
     registers[regName]!.waitOn(id, addListener);
   }
 

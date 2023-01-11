@@ -113,7 +113,7 @@ class _InstructionsScreenState extends ConsumerState<InstructionsScreen> {
               right: 48.sp,
               child: CTAButton(
                 text: 'Next',
-                onPressed: () => vm.goNext(context),
+                onPressed: () => vm.goNext(context, ref),
               )),
           Positioned(
               bottom: 59.sp,

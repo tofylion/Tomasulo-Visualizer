@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,9 +40,10 @@ class _InstructionRowElementState extends ConsumerState<InstructionRowElement> {
         height: elementSize.height,
         decoration: decoration,
         child: Center(
-          child: Text(
+          child: AutoSizeText(
             widget.content,
             style: elementsTextStyle,
+            maxLines: 1,
           ),
         ),
       ),

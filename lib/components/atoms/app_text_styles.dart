@@ -74,38 +74,25 @@ class AppTextStyles {
         color: AppColours.egyptianBlue,
       );
 
-  static TextStyle get _dp16YellowWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp16Yellow => _baseStyle.copyWith(
         fontSize: 16.sp,
         color: AppColours.yellowBrickRoad,
         shadows: [AppShadows.textShadowDefault],
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.sp
-          ..color = Colors.black,
       );
 
-  static TextStyle get _dp20YellowWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp20Yellow => _baseStyle.copyWith(
         fontSize: 20.sp,
         color: AppColours.yellowBrickRoad,
         shadows: [AppShadows.textShadowDefault],
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.sp
-          ..color = Colors.black,
       );
 
-  static TextStyle get _dp32YellowWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp32Yellow => _baseStyle.copyWith(
         fontSize: 32.sp,
         color: AppColours.yellowBrickRoad,
         shadows: [AppShadows.textShadowDefault],
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.sp
-          ..color = Colors.black,
       );
-  static TextStyle get _dp16BlackWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp16BlackShadow => _baseStyle.copyWith(
         fontSize: 16.sp,
-        color: AppColours.black,
         shadows: [AppShadows.textShadowDefault],
         foreground: Paint()
           ..style = PaintingStyle.stroke
@@ -113,9 +100,8 @@ class AppTextStyles {
           ..color = Colors.black,
       );
 
-  static TextStyle get _dp20BlackWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp20BlackShadow => _baseStyle.copyWith(
         fontSize: 20.sp,
-        color: AppColours.black,
         shadows: [AppShadows.textShadowDefault],
         foreground: Paint()
           ..style = PaintingStyle.stroke
@@ -123,14 +109,17 @@ class AppTextStyles {
           ..color = Colors.black,
       );
 
-  static TextStyle get _dp32BlackWithShadow => _baseStyle.copyWith(
+  static TextStyle get _dp32BlackShadow => _baseStyle.copyWith(
         fontSize: 32.sp,
-        color: AppColours.black,
         shadows: [AppShadows.textShadowDefault],
         foreground: Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.sp
           ..color = Colors.black,
+      );
+  static TextStyle get _dp48Grey => _baseStyle.copyWith(
+        fontSize: 48.sp,
+        color: AppColours.grey,
       );
   static TextStyle get dp64PowderBlue => _dp64PowderBlue;
 
@@ -158,15 +147,17 @@ class AppTextStyles {
 
   static TextStyle get dp20EgyptianBlue => _dp20EgyptianBlue;
 
-  static TextStyle get dp16YellowWithShadow => _dp16YellowWithShadow;
+  static TextStyle get dp16Yellow => _dp16Yellow;
 
-  static TextStyle get dp20YellowWithShadow => _dp20YellowWithShadow;
+  static TextStyle get dp20Yellow => _dp20Yellow;
 
-  static TextStyle get dp32YellowWithShadow => _dp32YellowWithShadow;
+  static TextStyle get dp32Yellow => _dp32Yellow;
 
-  static TextStyle get dp16BlackWithShadow => _dp16BlackWithShadow;
+  static TextStyle get dp16BlackShadow => _dp16BlackShadow;
 
-  static TextStyle get dp20BlackWithShadow => _dp20BlackWithShadow;
+  static TextStyle get dp20BlackShadow => _dp20BlackShadow;
 
-  static TextStyle get dp32BlackWithShadow => _dp32BlackWithShadow;
+  static TextStyle get dp32BlackShadow => _dp32BlackShadow;
+
+  static TextStyle get dp48Grey => _dp48Grey;
 }
