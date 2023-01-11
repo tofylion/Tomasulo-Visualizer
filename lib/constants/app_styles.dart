@@ -11,4 +11,14 @@ class AppStyles {
       splashFactory: NoSplash.splashFactory);
   static MaterialStateProperty<Color?> get secondaryButtonBackgroundColour =>
       MaterialStateProperty.all<Color>(AppColours.lightBlue);
+  static MaterialStateProperty<Color?> get scrollThumbColor =>
+      MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.hovered)) {
+          return AppColours.powderBlue;
+        } else if (states.contains(MaterialState.dragged)) {
+          return AppColours.lightBlue;
+        } else {
+          return AppColours.powderBlue.withOpacity(0.5);
+        }
+      });
 }

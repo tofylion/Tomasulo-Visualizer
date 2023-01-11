@@ -34,6 +34,15 @@ class AppTextStyles {
         fontSize: 42.sp,
         color: AppColours.powderBlue,
       );
+  static TextStyle get _dp36EgyptianBlue => _baseStyle.copyWith(
+        fontSize: 36.sp,
+        color: AppColours.egyptianBlue,
+      );
+
+  static TextStyle get _dp36Black => _baseStyle.copyWith(
+        fontSize: 36.sp,
+        color: Colors.black,
+      );
 
   static TextStyle get dp64PowderBlue => _dp64PowderBlue;
 
@@ -41,7 +50,11 @@ class AppTextStyles {
 
   static TextStyle get dp32Black => _dp32Black;
 
+  static TextStyle get dp36Black => _dp36Black;
+
   static TextStyle get dp32EgyptianBlue => _dp32EgyptianBlue;
 
   static TextStyle get dp42PowderBlue => _dp42PowderBlue;
+
+  static TextStyle get dp36EgyptianBlue => _dp36EgyptianBlue;
 }

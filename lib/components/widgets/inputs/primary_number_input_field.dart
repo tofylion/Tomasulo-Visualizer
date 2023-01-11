@@ -7,7 +7,12 @@ import 'package:tomasulo_viz/components/atoms/dimensions.dart';
 
 class PrimaryNumberInputField extends StatelessWidget {
   const PrimaryNumberInputField(
-      {super.key, this.initialValue, this.onChanged, this.width, this.height});
+      {super.key,
+      this.initialValue,
+      this.onChanged,
+      this.width,
+      this.height,
+      this.style});
 
   final String? initialValue;
   final void Function(String value)? onChanged;
@@ -17,11 +22,13 @@ class PrimaryNumberInputField extends StatelessWidget {
 
   ///default = 50.sp
   final double? height;
+
+  final TextStyle? style;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: AppColours.egyptianBlue,
-      style: AppTextStyles.dp32Black,
+      style: style ?? AppTextStyles.dp32Black,
       textAlign: TextAlign.center,
       initialValue: initialValue,
       onChanged: onChanged,

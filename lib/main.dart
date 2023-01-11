@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
+import 'package:tomasulo_viz/constants/app_styles.dart';
 import 'package:tomasulo_viz/screens/landing_screen/landing_screen.dart';
 
 void main() {
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Tomasulo Viz',
           theme: ThemeData(
+              scrollbarTheme: ScrollbarThemeData(
+                thumbColor: AppStyles.scrollThumbColor,
+              ),
               primarySwatch: Colors.blue,
               primaryColor: AppColours.egyptianBlue),
           home: child,

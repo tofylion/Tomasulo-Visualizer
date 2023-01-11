@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tomasulo_viz/components/molecules/tappable.dart';
 import 'package:tomasulo_viz/components/widgets/buttons/cta_button.dart';
 import 'package:tomasulo_viz/components/widgets/buttons/secondary_button.dart';
 import 'package:tomasulo_viz/constants/app_assets.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
-import 'package:tomasulo_viz/constants/app_styles.dart';
 import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
-import 'package:tomasulo_viz/components/atoms/dimensions.dart';
 import 'package:tomasulo_viz/screens/instructions_screen/instructions_screen.dart';
 import 'package:tomasulo_viz/screens/settings_screen/main/settings_screen.dart';
 

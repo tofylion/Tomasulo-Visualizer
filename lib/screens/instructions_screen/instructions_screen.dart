@@ -1,62 +1,108 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sprung/sprung.dart';
 import 'package:tomasulo_viz/components/atoms/app_colours.dart';
-import 'package:tomasulo_viz/components/atoms/app_text_styles.dart';
 import 'package:tomasulo_viz/components/atoms/dimensions.dart';
 import 'package:tomasulo_viz/components/widgets/buttons/cta_button.dart';
-import 'package:tomasulo_viz/constants/app_styles.dart';
+import 'package:tomasulo_viz/components/widgets/buttons/secondary_button.dart';
+import 'package:tomasulo_viz/constants/app_assets.dart';
+import 'package:tomasulo_viz/constants/app_timing.dart';
+import 'package:tomasulo_viz/models/instruction.dart';
 import 'package:tomasulo_viz/screens/instructions_screen/instructions_screen_view_model.dart';
+import 'package:tomasulo_viz/screens/instructions_screen/widgets/instruction_row.dart';
 
-class InstructionsScreen extends ConsumerWidget {
+class InstructionsScreen extends ConsumerStatefulWidget {
   const InstructionsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _InstructionsScreenState();
+}
+
+class _InstructionsScreenState extends ConsumerState<InstructionsScreen> {
+  late final ScrollController horizontalController;
+  late final ScrollController verticalController;
+
+  @override
+  void initState() {
+    horizontalController = ScrollController();
+    verticalController = ScrollController();
+    _scrollDown();
+    super.initState();
+  }
+
+  Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        return Material(
+          elevation: 0,
+          color: Colors.transparent,
+          child: child,
+        );
+      },
+      child: child,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final vm = ref.watch(InstructionsScreenViewModel.provider);
     return Scaffold(
-      backgroundColor: AppColours.darkBlue,
+      backgroundColor: AppColours.egyptianBlue,
       body: Stack(
+        fit: StackFit.expand,
         children: [
+          SvgPicture.asset(
+            AppAssets.instructionsHeader,
+            height: 1.sh,
+            width: 1.sw,
+            fit: BoxFit.fitWidth,
+            colorBlendMode: BlendMode.src,
+            alignment: Alignment.topRight,
+          ),
           Positioned.fill(
             child: Align(
                 child: Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 204.sp, horizontal: 58.sp),
+              padding: EdgeInsets.only(
+                  top: 204.sp, right: 58.sp, bottom: 150.sp, left: 58.sp),
               child: Padding(
-                padding: EdgeInsets.only(right: 122.sp, left: 63.sp),
-                child: ListView(
+                padding: EdgeInsets.only(right: 122.sp),
+                child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 150.sp,
-                          height: 50.sp,
-                          decoration: BoxDecoration(
-                            color: AppColours.lightBlue,
-                            borderRadius: Dimensions.defaultButtonRadius,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'ADD',
-                              style: AppTextStyles.dp32EgyptianBlue,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10.sp),
-                        PrimaryDropDown(
-                          value: vm.selectedRegister,
-                          items: vm.registers,
-                          onChanged: (value) {
-                            if (value != null) {
-                              vm.selectedRegister = value;
-                            }
-                          },
-                        ),
-                      ],
-                    )
+                    Expanded(
+                      child: Scrollbar(
+                          controller: verticalController,
+                          child: ReorderableListView.builder(
+                            buildDefaultDragHandles: false,
+                            proxyDecorator: proxyDecorator,
+                            itemCount: vm.instructions.length,
+                            scrollController: verticalController,
+                            onReorder: vm.reorderInstructions,
+                            itemBuilder: (context, index) {
+                              final instruction = vm.instructions[index];
+                              return Column(
+                                key: ValueKey(instruction),
+                                children: [
+                                  InstructionRow(
+                                    instruction: instruction,
+                                    index: index,
+                                    remove: vm.removeInstruction,
+                                  ),
+                                  SizedBox(
+                                    height: 20.sp,
+                                  ),
+                                ],
+                              );
+                            },
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 63.sp),
+                      child: instructionAddingButtons(vm),
+                    ),
                   ],
                 ),
               ),
@@ -68,97 +114,60 @@ class InstructionsScreen extends ConsumerWidget {
               child: CTAButton(
                 text: 'Next',
                 onPressed: () => DoNothingAction(),
+              )),
+          Positioned(
+              bottom: 59.sp,
+              left: 48.sp,
+              child: CTAButton(
+                text: 'Back',
+                onPressed: () => Navigator.pop(context),
               ))
         ],
       ),
     );
   }
-}
 
-class PrimaryDropDown extends StatelessWidget {
-  const PrimaryDropDown({
-    Key? key,
-    this.value,
-    this.items,
-    this.onChanged,
-  }) : super(key: key);
-
-  final String? value;
-  final List<String?>? items;
-  final void Function(String? value)? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return ButtonTheme(
-      alignedDropdown: true,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton2<String>(
-          dropdownDecoration: BoxDecoration(
-            color: AppColours.lightBlue,
-            borderRadius: Dimensions.defaultButtonRadius,
-          ),
-          buttonElevation: 0,
-          dropdownElevation: 0,
-          dropdownPadding: EdgeInsets.zero,
-          buttonSplashColor: Colors.transparent,
-          itemSplashColor: Colors.transparent,
-          customButton: Container(
-            width: 100.sp,
-            height: 50.sp,
-            decoration: BoxDecoration(
-              color: AppColours.lightBlue,
-              borderRadius: Dimensions.defaultButtonRadius,
-            ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    value ?? '',
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.angleDown,
-                    size: 25.sp,
-                    color: AppColours.egyptianBlue,
-                  ),
-                ]),
-          ),
-          dropdownOverButton: true,
-          selectedItemHighlightColor: AppColours.mint,
-          buttonHeight: 50.sp,
-          buttonWidth: 100.sp,
-          isDense: true,
-          style: AppTextStyles.dp32EgyptianBlue,
-          value: value,
-          selectedItemBuilder: (context) {
-            return [
-              Container(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Baseline(
-                      baseline: 35.sp,
-                      baselineType: TextBaseline.alphabetic,
-                      child: Text(
-                        value ?? '',
-                        style: AppTextStyles.dp32EgyptianBlue,
-                      ),
-                    ),
-                  ],
+  SizedBox instructionAddingButtons(InstructionsScreenViewModel vm) {
+    return SizedBox(
+      height: 80.sp,
+      width: Size.infinite.width,
+      child: Scrollbar(
+        controller: horizontalController,
+        scrollbarOrientation: ScrollbarOrientation.bottom,
+        child: ListView.builder(
+          controller: horizontalController,
+          scrollDirection: Axis.horizontal,
+          itemCount: InstructionType.values.length,
+          itemBuilder: (context, index) {
+            return Row(
+              children: [
+                SecondaryButton(
+                  text: InstructionType.values[index].name.toUpperCase(),
+                  fixedSize: MaterialStateProperty.all<Size?>(
+                      Dimensions.minButtonSize),
+                  onPressed: () {
+                    vm.createInstruction(InstructionType.values[index]);
+                    _scrollDown();
+                  },
                 ),
-              )
-            ];
+                SizedBox(
+                  width: 12.sp,
+                ),
+              ],
+            );
           },
-          items: items
-                  ?.map((e) => DropdownMenuItem<String>(
-                        alignment: Alignment.center,
-                        child: Text(e ?? ''),
-                        value: e,
-                      ))
-                  .toList() ??
-              [],
-          onChanged: onChanged,
         ),
       ),
     );
+  }
+
+  void _scrollDown() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      verticalController.animateTo(
+        verticalController.position.maxScrollExtent,
+        duration: AppTiming.scrollAnimationDuration,
+        curve: Sprung.overDamped,
+      );
+    });
   }
 }
