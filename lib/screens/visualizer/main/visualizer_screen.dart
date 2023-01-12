@@ -11,8 +11,11 @@ import 'package:tomasulo_viz/models/providers/reservation_stations_providers.dar
 import 'package:tomasulo_viz/screens/visualizer/main/visualizer_screen_view_model.dart';
 import 'package:tomasulo_viz/screens/visualizer/visualizer_drawing_constants.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/instructions_queue/instructions_queue.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/operation_station/operation_station_widget.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/register_file/register_file.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/address_unit_widget.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/memory_buffer_widget.dart';
+import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/reservation_station_row.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/reservation_station/reservation_station_widget.dart';
 
 class VisualizerScreen extends ConsumerStatefulWidget {
@@ -89,6 +92,10 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.memorySize,
             left: VizDConstants.memoryLeft,
             bottom: -VizDConstants.memoryBotom + 1.sh,
+            child: const OperationStationWidget(
+              name: 'Memory',
+              type: AluStation.load,
+            ),
           ),
 
           ///FP Adders (shifted to right by 24 than design)
@@ -96,6 +103,10 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.FUSize,
             right: -VizDConstants.FPAdderRight + 1.sw,
             bottom: -VizDConstants.FUBottom + 1.sh,
+            child: const OperationStationWidget(
+              name: 'Adders',
+              type: AluStation.add,
+            ),
           ),
 
           ///FP Multipliers
@@ -103,6 +114,8 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.FUSize,
             right: -VizDConstants.FPMultRight + 1.sw,
             bottom: -VizDConstants.FUBottom + 1.sh,
+            child: const OperationStationWidget(
+                name: 'Multipliers', type: AluStation.mult),
           ),
 
           ///RS Adders
@@ -126,6 +139,7 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.ALUSize,
             bottom: -VizDConstants.ALUBottom + 1.sh,
             left: VizDConstants.ALUleft,
+            child: const AddressUnitWidget(),
           ),
 
           ///RegFile
@@ -133,7 +147,7 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
             size: VizDConstants.regFileSize,
             bottom: -VizDConstants.regFileBottom + 1.sh,
             right: -VizDConstants.regFileRight + 1.sw,
-            child: RegisterFileWidget(),
+            child: const RegisterFileWidget(),
           ),
 
           Positioned(

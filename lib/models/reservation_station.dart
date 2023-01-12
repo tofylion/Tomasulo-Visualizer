@@ -163,8 +163,12 @@ class AddressUnit extends ReservationStationElement {
   // are you asleep ??? ........
   // good night ... morning bel manzar da
   void issueStore() {
-    if (!storeBuffer.checkConflict(currentInstruction!.addressOffset!) &&
-        !loadBuffer.checkConflict(currentInstruction!.addressOffset!)) {
+    if (!storeBuffer.checkConflict((currentInstruction!.addressOffset! +
+                currentInstruction!.operand2Val)
+            .round()) &&
+        !loadBuffer.checkConflict((currentInstruction!.addressOffset! +
+                currentInstruction!.operand2Val)
+            .round())) {
       if (storeBuffer.allocate(_currentInstruction!)) {
         freeStation();
       }
@@ -172,7 +176,9 @@ class AddressUnit extends ReservationStationElement {
   }
 
   void issueLoad() {
-    if (!storeBuffer.checkConflict(currentInstruction!.addressOffset!)) {
+    if (!storeBuffer.checkConflict(
+        (currentInstruction!.addressOffset! + currentInstruction!.operand2Val)
+            .round())) {
       if (loadBuffer.allocate(_currentInstruction!)) {
         freeStation();
       }
@@ -482,8 +488,12 @@ class MemoryBuffer extends ReservationStation {
 
   bool checkConflict(int c_address) {
     for (MemoryOperationElement e in real_stations) {
-      if (e.address == c_address) {
-        return true;
+      if (e._busy) {
+        if ((e.currentInstruction!.operand2Val +
+                e.currentInstruction!.addressOffset!) ==
+            c_address) {
+          return true;
+        }
       }
     }
     return false;

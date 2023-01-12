@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tomasulo_viz/constants/app_config.dart';
+import 'package:tomasulo_viz/models/operation_station.dart';
 import 'package:tomasulo_viz/models/providers/memory_provider.dart';
 import 'package:tomasulo_viz/models/providers/registers_providers.dart';
 import 'package:tomasulo_viz/models/reservation_station.dart';
+import 'package:tuple/tuple.dart';
 
 enum AluStation { add, mult, load, store }
 
@@ -78,4 +80,10 @@ final reservationStationElementProvider =
     }
     return station.stations.firstWhere((element) => element.ID == id);
   }
+});
+
+final operationStationProvider =
+    Provider.family<OperationStation, AluStation>((ref, type) {
+  final reservationStation = ref.watch(reservationStationProvider(type));
+  return reservationStation.functionalUnit;
 });
