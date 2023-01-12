@@ -10,6 +10,8 @@ class AppColours {
   /// #B0DABE
   static const Color mint = Color(0xFFb0dabe);
 
+  static const Color accessibleGreen = Color(0xFF44c95b);
+
   /// #99B1C9
   static const Color powderBlue = Color(0xFF99b1c9);
 

@@ -216,7 +216,6 @@ class MemOperationStation extends OperationStation {
   void operate() {
     for (int i = 0; i < stations.length; i += i-- - i) {
       if (stations[i].busy) {
-        stations[i].currentCycle++;
         if (stations[i].currentCycle == delay) {
           int address = (stations[i]._currentInstruction!.addressOffset! +
                   stations[i]._currentInstruction!.operand2Val)
@@ -238,6 +237,7 @@ class MemOperationStation extends OperationStation {
             stations[i].emptyStation();
           }
         }
+        stations[i].currentCycle++;
       }
     }
   }

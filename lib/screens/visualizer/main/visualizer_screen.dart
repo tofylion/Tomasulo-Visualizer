@@ -40,6 +40,7 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
           ///Clock Count
           Consumer(
             builder: (context, ref, child) {
+              final finished = ref.watch(executionFinishedProvider);
               ref.watch(clockProvider);
               return Positioned(
                   top: 64.sp,
@@ -55,8 +56,10 @@ class _VisualizerScreenState extends ConsumerState<VisualizerScreen> {
                       ),
                       FaIcon(
                         FontAwesomeIcons.solidClock,
-                        size: 42.sp,
-                        color: AppColours.grey,
+                        size: !finished ? 42.sp : 60.sp,
+                        color: !finished
+                            ? AppColours.grey
+                            : AppColours.accessibleGreen,
                       ),
                     ],
                   ));

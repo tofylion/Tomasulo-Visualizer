@@ -36,7 +36,7 @@ class LandingScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'By: Group Name',
+                    'By: Team 1 ©2023',
                     style: AppTextStyles.dp32PowderBlue,
                   ),
                   SizedBox(

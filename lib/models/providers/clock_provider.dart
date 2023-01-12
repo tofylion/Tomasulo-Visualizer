@@ -4,7 +4,7 @@ import 'package:tomasulo_viz/models/providers/reservation_stations_providers.dar
 
 final clockProvider = ChangeNotifierProvider<Clock>((ref) => Clock());
 final executionFinishedProvider = Provider<bool>((ref) {
-  ref.watch(clockProvider);
+  final clock = ref.watch(clockProvider);
   final addStation = ref.read(reservationStationProvider(AluStation.add));
   final multStation = ref.read(reservationStationProvider(AluStation.mult));
   final storeBuffer = ref.read(reservationStationProvider(AluStation.store));
@@ -15,5 +15,6 @@ final executionFinishedProvider = Provider<bool>((ref) {
       multStation.isEmpty() &&
       storeBuffer.isEmpty() &&
       loadBuffer.isEmpty() &&
-      !addressUnit.busy;
+      !addressUnit.busy &&
+      clock.cycles != 0;
 });

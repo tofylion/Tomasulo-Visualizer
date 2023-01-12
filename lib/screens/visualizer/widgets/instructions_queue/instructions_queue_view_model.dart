@@ -21,6 +21,8 @@ class InstructionsQueueViewModel extends ChangeNotifier {
 
   Instruction? get currentInstruction => _instructions.currentInstruction;
 
+  int get currentInstructionIndex => _instructions.index;
+
   Instruction? getInstructionByIndex(int index) =>
       _instructions.instructions[index];
 

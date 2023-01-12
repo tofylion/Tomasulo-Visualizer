@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sprung/sprung.dart';
+import 'package:tomasulo_viz/constants/app_timing.dart';
 import 'package:tomasulo_viz/models/instruction.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/instructions_queue/instruction_row/instruction_queue_row.dart';
 import 'package:tomasulo_viz/screens/visualizer/widgets/instructions_queue/instruction_row/instruction_queue_row_element.dart';
@@ -20,6 +22,8 @@ class _InstructionsQueueState extends ConsumerState<InstructionsQueue> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(InstructionsQueueViewModel.provider);
+    scrollToSelected(vm.currentInstructionIndex);
+
     return Scrollbar(
       controller: _controller,
       child: ListView.builder(
@@ -28,7 +32,6 @@ class _InstructionsQueueState extends ConsumerState<InstructionsQueue> {
         itemBuilder: (context, index) {
           final status = vm.getInstructionStatus(index);
           final instruction = vm.getInstructionByIndex(index);
-
           return Column(
             children: [
               if (index != 0) SizedBox(height: 11.sp),
@@ -42,5 +45,23 @@ class _InstructionsQueueState extends ConsumerState<InstructionsQueue> {
         },
       ),
     );
+  }
+
+  double getScrollPosition(int selectedIndex) {
+    return 11.sp * (selectedIndex - 9) + (47.sp * selectedIndex - 9);
+  }
+
+  void scrollToSelected(int index) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _controller.animateTo(getScrollPosition(index),
+          duration: AppTiming.scrollAnimationDuration,
+          curve: Sprung.overDamped);
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

@@ -478,8 +478,8 @@ class MemoryBuffer extends ReservationStation {
               clockCycle + functionalUnit.delay - 1;
           real_stations[i]._currentInstruction!.writeBackOperationCycle =
               clockCycle + functionalUnit.delay;
-
           real_stations[i].operating = true;
+
           break;
         }
       }

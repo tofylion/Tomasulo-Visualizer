@@ -37,24 +37,22 @@ class MemoryBufferRow extends ConsumerWidget {
           ),
           Stack(
             children: [
-              AutoSizeText(
-                  (item.currentInstruction?.addressOffset ??
-                          0 +
-                              (item.currentInstruction?.operand2Val.toInt() ??
-                                  0))
-                      .toString(),
+              AutoSizeText(getOperandText(item),
                   style: AppTextStyles.dp16BlackShadow),
-              AutoSizeText(
-                  (item.currentInstruction?.addressOffset ??
-                          0 +
-                              (item.currentInstruction?.operand2Val.toInt() ??
-                                  0))
-                      .toString(),
+              AutoSizeText(getOperandText(item),
                   style: AppTextStyles.dp16Yellow),
             ],
           )
         ],
       ),
     );
+  }
+
+  String getOperandText(MemoryOperationElement item) {
+    return item.busy
+        ? (item.currentInstruction?.addressOffset ??
+                0 + (item.currentInstruction?.operand2Val.toInt() ?? 0))
+            .toString()
+        : 'X';
   }
 }

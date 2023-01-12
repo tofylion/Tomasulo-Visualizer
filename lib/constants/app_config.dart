@@ -31,15 +31,15 @@ const String memorySizeConfigName = 'MEMORY Size';
 
 class AppConfig extends ChangeNotifier {
   Map<CycleConfig, int> cycles = {
-    for (CycleConfig v in CycleConfig.values) v: 10
+    for (CycleConfig v in CycleConfig.values) v: 2
   };
 
   Map<RSSizesConfig, int> rsSizes = {
-    for (RSSizesConfig v in RSSizesConfig.values) v: 10
+    for (RSSizesConfig v in RSSizesConfig.values) v: 3
   };
 
   Map<FUSizesConfig, int> fuSizes = {
-    for (FUSizesConfig v in FUSizesConfig.values) v: 10
+    for (FUSizesConfig v in FUSizesConfig.values) v: 1
   };
 
   void modifyConfig<T extends Enum>(
