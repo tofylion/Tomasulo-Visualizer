@@ -42,13 +42,13 @@ class AddOperationElement extends OperationStationElement {
     if (_currentInstruction != null && _busy) {
       if (_currentInstruction!.type == instruction.InstructionType.add) {
         station!.notifyDataListeners(_currentInstruction!.operand1Val +
-            _currentInstruction!.operand1Val);
+            _currentInstruction!.operand2Val);
         station!.freeStation();
         emptyStation();
         notifyListeners();
       } else if (_currentInstruction!.type == instruction.InstructionType.sub) {
         station!.notifyDataListeners(_currentInstruction!.operand1Val -
-            _currentInstruction!.operand1Val);
+            _currentInstruction!.operand2Val);
         station!.freeStation();
         emptyStation();
         notifyListeners();
@@ -68,7 +68,7 @@ class MultOperationElement extends OperationStationElement {
     if (_currentInstruction != null && _busy) {
       if (_currentInstruction!.type == instruction.InstructionType.mult) {
         station!.notifyDataListeners(_currentInstruction!.operand1Val *
-            _currentInstruction!.operand1Val);
+            _currentInstruction!.operand2Val);
         station!.freeStation();
         emptyStation();
         notifyListeners();
