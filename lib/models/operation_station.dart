@@ -232,12 +232,12 @@ class MemOperationStation extends OperationStation {
           } else if (stations[i]._currentInstruction!.type ==
               instruction.InstructionType.store) {
             memory[address] = stations[i]._currentInstruction!.operand1Val;
-            notifyListeners();
             stations[i].station!.freeStation();
             stations[i].emptyStation();
           }
         }
         stations[i].currentCycle++;
+        notifyListeners();
       }
     }
   }

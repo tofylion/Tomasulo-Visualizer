@@ -22,7 +22,10 @@ class _InstructionsQueueState extends ConsumerState<InstructionsQueue> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(InstructionsQueueViewModel.provider);
-    scrollToSelected(vm.currentInstructionIndex);
+    if (vm.currentInstructionIndex >= 2 &&
+        vm.currentInstructionIndex <= vm.instructionsLength - 2) {
+      scrollToSelected(vm.currentInstructionIndex);
+    }
 
     return Scrollbar(
       controller: _controller,
